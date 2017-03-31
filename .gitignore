@@ -28,4 +28,4 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
-/[Ll]ibrary/*
+3D_MobileVRGame/[Ll]ibrary/*
