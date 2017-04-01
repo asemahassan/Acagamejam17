@@ -8,39 +8,42 @@ public class SpawnPointController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		SpawnItemsForGamePhase (GamePhase.Forest);
 	}
 	
 	internal void SpawnItemsForGamePhase(GamePhase phase) {
 
-		int amountSpwnPnts;
-		GameObject spwnParent;
+		int amountSpwnPnts = 0;
+		GameObject spwnParent = new GameObject ();
 
 		switch (phase) {
 		case GamePhase.Forest:
 			{
-				amountSpwnPnts = UnityEngine.Random (3, 8);
+				amountSpwnPnts = UnityEngine.Random.Range (3, 4);
 				spwnParent = GameObject.Find ("Phase1");
 				break;
 			}
 
 		case GamePhase.City:
 			{
-				amountSpwnPnts = UnityEngine.Random (3, 6);
+				
+				amountSpwnPnts = UnityEngine.Random.Range (3, 6);
 				spwnParent = GameObject.Find ("Phase1");
 				break;
 			}
 		
 		case GamePhase.Island:
 			{
-				amountSpwnPnts = UnityEngine.Random (2, 5);
+				amountSpwnPnts = UnityEngine.Random.Range (2, 5);
 				spwnParent = GameObject.Find ("Phase1");
 				break;
 				
 			}
+		default:
+			break;
 		}
+			SpawnItems (amountSpwnPnts, spwnParent);
 
-		SpawnItems (amountSpwnPnts, spwnParent);
 	}
 
 	void SpawnItems(int amountOfPoints, GameObject parent) {
@@ -49,9 +52,11 @@ public class SpawnPointController : MonoBehaviour {
 		//remove the parent transform, which is on index 0
 		transforms.RemoveAt(0);
 
-		for (int i = 0; i < amountOfPoints; i++) {
-			GameObject Quizmarker = GameObject.Instantiate (Resources.Load ("/Prefabs/quizmarker"));
-			Quizmarker.transform.position = transforms [UnityEngine.Random (0, transforms.Count)];
+		for (int i = amountOfPoints; i >= 0; i--) {
+			GameObject Quizmarker = Instantiate (Resources.Load("Prefabs/quizmarker")) as GameObject;
+			int which = UnityEngine.Random.Range (0, transforms.Count);
+			Quizmarker.transform.position = transforms[which].position;
+			transforms.RemoveAt (which); //so it can't spawn two there
 
 			}
 

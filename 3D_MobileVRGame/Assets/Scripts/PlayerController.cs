@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour
 	private CharacterController controller = null;
 	private Transform mainCamera = null;
 
+	public DialogInterface diagUI;
+	bool convoHasBegun;
+
 	#endregion
 
 	#region UNITY_METHODS
@@ -73,8 +76,10 @@ public class PlayerController : MonoBehaviour
 				}
 			}
 		}
+
 	}
 
 	#endregion
+
 
 }

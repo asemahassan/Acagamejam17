@@ -6,30 +6,30 @@ public class examplePlayer : MonoBehaviour
     //This script handles player movement and interaction with other NPC game objects
 
     //Reference to our diagUI script for quick access
-    public exampleUI diagUI;
+    public DialogInterface diagUI;
 	bool convoHasBegun;
 
     void Start()
     {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = true;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
     {
-
-        //Only allow player to move and turn if there are no dialogs loaded
-        if (!VIDE_Data.isLoaded)
-        {
-            transform.Rotate(0, Input.GetAxis("Mouse X") * 5, 0);
-            float move = Input.GetAxisRaw("Vertical");
-            transform.position += transform.forward * 5 * move * Time.deltaTime;
-        }
-        //Interact with NPCs when hitting spacebar
-//        if (Input.GetKeyDown(KeyCode.E))
+//
+//        //Only allow player to move and turn if there are no dialogs loaded
+//        if (!VIDE_Data.isLoaded)
 //        {
-//            TryInteract();
+//            transform.Rotate(0, Input.GetAxis("Mouse X") * 5, 0);
+//            float move = Input.GetAxisRaw("Vertical");
+//            transform.position += transform.forward * 5 * move * Time.deltaTime;
 //        }
+//        //Interact with NPCs when hitting spacebar
+////        if (Input.GetKeyDown(KeyCode.E))
+////        {
+////            TryInteract();
+////        }
         //Hide/Show cursor
 		if (convoHasBegun) {
 			if (Input.GetKeyDown(KeyCode.Return) || (Input.GetKeyDown(KeyCode.Space)) ) {
