@@ -64,7 +64,7 @@ public class SpawnPointController : MonoBehaviour {
 			Quizmarker.transform.position = transforms[which].position;
 			Quizmarker.GetComponent<FacePlayer>().diagUI = GameObject.Find("UIHandler").GetComponent<DialogInterface>();
 
-			Quizmarker.GetComponent<VIDE_Assign> ().assignedDialogue = "Laura";
+			Quizmarker.GetComponent<VIDE_Assign> ().AssignNew ("Laura");
 			Quizmarker.GetComponent<VIDE_Assign> ().assignedIndex = conv_IDs[UnityEngine.Random.Range (0, 14)]; 
 			transforms.RemoveAt (which); //so it can't spawn two there
 

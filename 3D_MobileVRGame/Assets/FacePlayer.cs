@@ -11,10 +11,23 @@ public class FacePlayer : MonoBehaviour {
 		
 	}
 	
-	// Update is called once per frame
-//	void Update () {
-//		this.transform.LookAt(GameObject.Find("Player").transform);
-//	}
+//	 Update is called once per frame
+	void Update () {
+		this.transform.LookAt(GameObject.Find("Player").transform);
+
+		if (convoHasBegun) {
+			if (Input.GetKeyDown (KeyCode.Space)) {
+				//If conversation already began, let's just progress through it
+
+				diagUI.CallNext ();
+			}
+
+			if (Input.GetKeyDown (KeyCode.Return)) {
+				diagUI.SaveAnswer ();
+
+			}
+		}
+	}
 
 	#region Dialog
 
@@ -41,11 +54,10 @@ public class FacePlayer : MonoBehaviour {
 
 		if (!VIDE_Data.isLoaded)
 		{
-			UnityEditor.EditorApplication.isPaused = true;
 			//... and use it to begin the conversation
 			diagUI.Begin(assigned);
 			convoHasBegun = true;
-
+			GameController._playerState = PlayerState.Dialog;
 			//set interface parts
 
 		}

@@ -60,7 +60,7 @@ public enum PlayerState
 {
 	None = 0,
 	Idle,
-	Moving,
+	Dialog,
 	InsideRoom,
 	CenterPoint,
 	AutoTranslation,
