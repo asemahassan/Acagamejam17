@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: eb181da6261d94241ba0868d444994c0
+timeCreated: 1491048040
+licenseType: Pro
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: DK Ravenheart
+  fontNames:
+  - DK Ravenheart
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

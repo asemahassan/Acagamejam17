@@ -65,6 +65,9 @@ public class examplePlayer : MonoBehaviour
                 //... and use it to begin the conversation
                 diagUI.Begin(assigned);
 			convoHasBegun = true;
+
+			//set interface parts
+
             }
             else
             {

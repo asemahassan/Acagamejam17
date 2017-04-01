@@ -508,7 +508,7 @@ public class VIDE_Data : MonoBehaviour
     /// </summary>
     /// <param name="diagToLoad"></param>
     /// <returns>NodeData</returns>
-    public static NodeData BeginDialogue(VIDE_Assign diagToLoad)
+   public static NodeData BeginDialogue(VIDE_Assign diagToLoad)
     {
         if (diagToLoad.assignedIndex < 0 || diagToLoad.assignedIndex > diagToLoad.diags.Count - 1)
         {
