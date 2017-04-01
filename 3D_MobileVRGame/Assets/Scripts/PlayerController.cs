@@ -15,8 +15,10 @@ public class PlayerController : MonoBehaviour
 	#region VARIABLES
 
 	//speed in VR mode should be less to avoid nausea
-	private float speed = 6.0F;
-	private float rotateSpeed = 3.0F;
+	[SerializeField]
+	private float speed = 10.0F;
+	[SerializeField]
+	private float rotateSpeed = 5.0F;
 	private CharacterController controller = null;
 	private Transform mainCamera = null;
 
