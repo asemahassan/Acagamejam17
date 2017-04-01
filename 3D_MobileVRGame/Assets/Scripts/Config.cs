@@ -43,3 +43,9 @@ public enum InputDevice
     None = -1,
     XboxOne,
 }
+
+public enum GamePhase { //levels
+	Forest = 0,
+	City = 1,
+	Island = 2
+}
