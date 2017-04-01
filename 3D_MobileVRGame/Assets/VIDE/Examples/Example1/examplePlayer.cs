@@ -32,7 +32,7 @@ public class examplePlayer : MonoBehaviour
 //        }
         //Hide/Show cursor
 		if (convoHasBegun) {
-			if (Input.GetMouseButton(0)) {
+			if (Input.GetKeyDown(KeyCode.Return) || (Input.GetKeyDown(KeyCode.Space)) ) {
 				//If conversation already began, let's just progress through it
 				diagUI.CallNext();
 			}

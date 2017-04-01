@@ -69,7 +69,7 @@ public class exampleUI : MonoBehaviour
         VIDE_Data.OnNodeChange += NodeChangeAction;
         VIDE_Data.OnEnd += EndDialogue;
 
-        SpecialStartNodeOverrides(diagToLoad); //This one checks for special cases when overrideStartNode could change right before starting a conversation
+       // SpecialStartNodeOverrides(diagToLoad); //This one checks for special cases when overrideStartNode could change right before starting a conversation
 
         VIDE_Data.BeginDialogue(diagToLoad); //Begins conversation, will call the first OnNodeChange
         uiContainer.SetActive(true);
@@ -97,12 +97,12 @@ public class exampleUI : MonoBehaviour
             //Scroll through Player dialogue options
             if (!data.pausedAction)
             {
-                if (Input.GetKeyDown(KeyCode.S))
+				if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
                     if (data.selectedOption < currentOptions.Count - 1)
                         data.selectedOption++;
                 }
-                if (Input.GetKeyDown(KeyCode.W))
+				if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
                     if (data.selectedOption > 0)
                         data.selectedOption--;
@@ -122,7 +122,10 @@ public class exampleUI : MonoBehaviour
     public void CallNext()
     {
         //Let's not go forward if text is currently being animated, but let's speed it up.
-        if (animatingText) { animatingText = false; return; }
+        if (animatingText) { 
+			animatingText = false; 
+			return;
+		}
 
         if (!dialoguePaused) //Only if
         {
@@ -318,7 +321,8 @@ public class exampleUI : MonoBehaviour
             int charIndex = 0;
             while (npcText.text != text)
             {
-                if (!animatingText) break; //CallNext() makes this possible to speed things up
+                if (!animatingText) 
+					break; //CallNext() makes this possible to speed things up
 
                 builder.Append(text[charIndex]);
                 charIndex++;
