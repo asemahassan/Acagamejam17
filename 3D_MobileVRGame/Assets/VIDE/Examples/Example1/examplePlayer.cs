@@ -31,12 +31,8 @@ public class examplePlayer : MonoBehaviour
 ////            TryInteract();
 ////        }
         //Hide/Show cursor
-		if (convoHasBegun) {
-			if (Input.GetKeyDown(KeyCode.Return) || (Input.GetKeyDown(KeyCode.Space)) ) {
-				//If conversation already began, let's just progress through it
-				diagUI.CallNext();
-			}
-		}
+
+
     }
 
     //Casts a ray to see if we hit an NPC and, if so, we interact

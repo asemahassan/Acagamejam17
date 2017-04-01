@@ -97,12 +97,12 @@ public class DialogInterface : MonoBehaviour
             //Scroll through Player dialogue options
             if (!data.pausedAction)
             {
-				if (Input.GetKeyDown(KeyCode.DownArrow))
+				if (Input.GetKeyDown(KeyCode.W))
                 {
                     if (data.selectedOption < currentOptions.Count - 1)
                         data.selectedOption++;
                 }
-				if (Input.GetKeyDown(KeyCode.UpArrow))
+				if (Input.GetKeyDown(KeyCode.S))
                 {
                     if (data.selectedOption > 0)
                         data.selectedOption--;
@@ -118,6 +118,19 @@ public class DialogInterface : MonoBehaviour
         }
     }
 
+	public void SaveAnswer()  {
+		var data = VIDE_Data.nodeData;
+
+		if (VIDE_Data.isLoaded) {
+			if (!data.pausedAction) {
+				Dictionary<int, int> reply = new Dictionary<int, int> ();
+				reply.Add (data.nodeID, data.selectedOption);
+
+				GameObject.Find("Quiz").GetComponent<ResultController>().AddReply(reply);
+			}
+		}
+	}
+
     //examplePlayer.cs calls this one to move forward in the conversation
     public void CallNext()
     {
@@ -125,7 +138,7 @@ public class DialogInterface : MonoBehaviour
         if (animatingText) { 
 			animatingText = false; 
 			return;
-		}
+		
 
         if (!dialoguePaused) //Only if
         {
@@ -144,7 +157,8 @@ public class DialogInterface : MonoBehaviour
             dialoguePaused = false;
             itemPopUp.SetActive(false);
         }
-    }       
+   	 }
+	}
 
     //Another way to handle Action Nodes is to listen to the OnActionNode event, which sends the ID of the action node
     void ActionHandler(int action)
@@ -343,6 +357,7 @@ public class DialogInterface : MonoBehaviour
         VIDE_Data.OnEnd -= EndDialogue;
         uiContainer.SetActive(false);
         VIDE_Data.EndDialogue();
+		GameController._playerState = PlayerState.Idle;
     }
 
     //Example method called by an Action Node
