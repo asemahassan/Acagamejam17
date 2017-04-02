@@ -19,6 +19,8 @@ public class GameController : MonoBehaviour
 	public static HMD _hmd = HMD.None;
 	private static GameObject hudObjUI = null;
 
+	private static Dictionary<string, int> QuestCounterData = new Dictionary<string,int> ();
+
 	#endregion
 
 	#region UNITY_METHODS
@@ -52,9 +54,32 @@ public class GameController : MonoBehaviour
 			int count = Int32.Parse (counterUI.text);
 			count++;
 			counterUI.text = count.ToString ();
+			if (QuestCounterData.ContainsKey (type.ToString ())) {
+				QuestCounterData [type.ToString ()] = count;
+				Debug.Log ("Existing:" + type.ToString () + " :" + count);
+			} else {
+				QuestCounterData.Add (type.ToString (), count);
+				Debug.Log ("AddedNew:" + type.ToString () + " :" + count);
+			}
 		}
-
 	}
 
+	public static int GetQuestCounterValueForKey (string key)
+	{
+		if (QuestCounterData.Count > 0) {
+			if (QuestCounterData.ContainsKey (key)) {
+				return QuestCounterData [key];
+			}
+		}
+		return 0;
+	}
 
+	public static void  CreateMeatObject (Vector3 pos)
+	{
+		pos = new Vector3 (pos.x + UnityEngine.Random.Range (-2, 2),
+			pos.y, pos.z + UnityEngine.Random.Range (-2, 2));
+
+		GameObject obj = Instantiate (Resources.Load ("Prefabs/Meat")) as GameObject;
+		obj.transform.position = pos;
+	}
 }

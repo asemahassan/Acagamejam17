@@ -6,9 +6,18 @@ public class Hunting : MonoBehaviour
 {
 	PlayerController playerCtrl = null;
 	bool isHunting = false;
+
+	[SerializeField]
+	GameObject meatPieces = null;
+	//	[SerializeField]
+	//	AudioSource _audio = null;
+
 	// Use this for initialization
 	void Start ()
 	{
+//		if (_audio == null) {
+//			_audio = this.GetComponent<AudioSource> ();
+//		}
 		if (playerCtrl == null) {
 			playerCtrl = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerController> ();
 		}
@@ -19,26 +28,29 @@ public class Hunting : MonoBehaviour
 	{
 		if (isHunting)
 			//do 3 times action to get meat loaf from animal as food
-		if (playerCtrl.huntDown == 3) {
-			//Kill animal --hide destroy object
-			Destroy (this.gameObject, 1.0f);
+		if (playerCtrl.huntDown == 4) {
 			isHunting = false;
-			GameController.UpdateQuestItemsCount (QuestType.Food);
+			for (int k = 0; k <= 3; k++) {
+				GameController.CreateMeatObject (this.transform.position);
+			}
+			GameController.UpdateQuestItemsCount (QuestType.Hunt);
 			GameController._playerState = PlayerState.Idle;
 			playerCtrl.huntDown = 0;
 			playerCtrl.HideSword ();
+
+			//Kill animal --hide destroy object
+			Destroy (this.gameObject, 1.0f);
 		}
 	}
 
 	void OnTriggerEnter (Collider col)
 	{
 		if (col.tag.Equals ("Player")) {
-
 			//take out sword
+			PlayerController._huntingAnimalPos = this.transform.position;
 			GameController._playerState = PlayerState.Hunt;
 			Debug.Log ("Start hunting");
 			isHunting = true;
 		}
-		
 	}
 }

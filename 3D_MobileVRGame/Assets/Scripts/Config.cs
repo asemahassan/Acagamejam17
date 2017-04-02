@@ -80,6 +80,7 @@ public enum QuestType
 	Coins,
 	Fire,
 	Freeman,
+	Hunt,
 	Food,
 	Woods,
 	Beggar,
