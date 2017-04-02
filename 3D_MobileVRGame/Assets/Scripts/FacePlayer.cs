@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Linq;
 
 public class FacePlayer : MonoBehaviour
@@ -17,28 +18,14 @@ public class FacePlayer : MonoBehaviour
 	//	 Update is called once per frame
 	void Update ()
 	{
-		//this.transform.LookAt (GameObject.Find ("Player").transform);
 
-		if (GameController._playerState == PlayerState.Dialog) {
-			if (Input.GetKeyUp(KeyCode.Space)) {
-				if (VIDE_Data.isLoaded)
-				//If conversation already began, let's just progress through it
-				diagUI.CallNext ();
-			}
-
-			if (Input.GetKeyDown (KeyCode.Return)) {
-				if (isActiveQuestion) {					
-					diagUI.SaveAnswer ();
-					isActiveQuestion = false;
-				}
-			}
-		}
 	}
+
 
 	#region Dialog
 
 	//Casts a ray to see if we hit an NPC and, if so, we interact
-	void TryInteract (Collider col)
+	IEnumerator TryInteract (Collider col)
 	{
 		gameObject.GetComponent<VIDE_Assign> ().AssignNew ("Laura");
 		//Lets grab the NPC's DialogueAssign script... if there's any
@@ -46,13 +33,15 @@ public class FacePlayer : MonoBehaviour
 		assigned = this.gameObject.GetComponent<VIDE_Assign> ();
 		//assign a dialogue ID
 		int rndId = UnityEngine.Random.Range (0, GameObject.Find ("Quiz").GetComponent<SpawnPointController> ().convIDs.Count);
-		assigned.assignedID = GameObject.Find ("Quiz").GetComponent<SpawnPointController> ().convIDs [rndId];
+		assigned.overrideStartNode = GameObject.Find ("Quiz").GetComponent<SpawnPointController> ().convIDs [rndId];
+		Debug.Log (assigned.overrideStartNode);
 		//remove the used ID 
 		GameObject.Find("Quiz").GetComponent<SpawnPointController>().convIDs.RemoveAt(rndId);
 
 		if (!VIDE_Data.inScene) {
 			Debug.LogError ("No VIDE_Data component in scene!");
-			return;
+			yield return null;
+
 		}       
 
 		if (!VIDE_Data.isLoaded) {
@@ -60,9 +49,36 @@ public class FacePlayer : MonoBehaviour
 			diagUI.Begin (assigned);
 			GameController._playerState = PlayerState.Dialog;
 			//set interface parts
+			}
 
+		while (!Input.GetKey (KeyCode.Space)) {
+			yield return null;
 		}
+		//Hack - only works because we always only have one convo with these
+		diagUI.CallNext ();
+		yield return new WaitForEndOfFrame ();
+
+		while (!Input.GetKey (KeyCode.Return)) {
+			yield return null;
+		}
+
+		if (isActiveQuestion) {					
+			diagUI.SaveAnswer ();
+			isActiveQuestion = false;
+
+			GameObject[] clones = GameObject.FindGameObjectsWithTag ("playerTexts");
+			foreach (GameObject go in clones) {
+				go.GetComponent<Text>().text = "";
+			}
+
+			diagUI.CallNext ();
+		}
+
+		diagUI.playerText.text = "";
+		//Remove the question mark
+		Destroy (gameObject);
 	}
+	
 
 	void OnTriggerEnter (Collider col)
 	{
@@ -72,7 +88,7 @@ public class FacePlayer : MonoBehaviour
 		if (col.tag.Equals ("Player")) {
 			Debug.Log ("Player collided with question mark...!");
 
-			TryInteract (col);
+			StartCoroutine(TryInteract (col));
 			isActiveQuestion = true;
 			didCollide = true;
 		}

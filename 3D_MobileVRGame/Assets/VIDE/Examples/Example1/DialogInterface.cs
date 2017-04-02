@@ -96,11 +96,11 @@ public class DialogInterface : MonoBehaviour
 		if (VIDE_Data.isLoaded) { //Only if
 			//Scroll through Player dialogue options
 			if (!data.pausedAction) {
-				if (Input.GetKeyDown (KeyCode.W)) {
+				if (Input.GetKeyDown (KeyCode.S)) {
 					if (data.selectedOption < currentOptions.Count - 1)
 						data.selectedOption++;
 				}
-				if (Input.GetKeyDown (KeyCode.S)) {
+				if (Input.GetKeyDown (KeyCode.W)) {
 					if (data.selectedOption > 0)
 						data.selectedOption--;
 				}
@@ -124,7 +124,7 @@ public class DialogInterface : MonoBehaviour
 				Dictionary<int, int> reply = new Dictionary<int, int> ();
 				reply.Add (data.nodeID, data.selectedOption);
 
-				GameObject.Find ("Quiz").GetComponent<ResultController> ().AddReply (reply);
+				GameObject.Find ("Quiz").GetComponent<ResultController> ().AddReply (data.nodeID, data.selectedOption);
 			}
 		}
 	}
@@ -339,6 +339,12 @@ public class DialogInterface : MonoBehaviour
 		uiContainer.SetActive (false);
 		VIDE_Data.EndDialogue ();
 		GameController._playerState = PlayerState.Idle;
+
+		//clear ui
+		npcName.text = "";
+		npcText.text = "";
+		playerText.text = "";
+
 	}
 
 	//Example method called by an Action Node

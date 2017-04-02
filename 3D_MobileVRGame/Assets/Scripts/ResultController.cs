@@ -12,10 +12,11 @@ public class ResultController : MonoBehaviour {
 		answers = new Dictionary<int, int> ();
 	}
 
-	public void AddReply(Dictionary<int, int> reply) {
-		//int id = reply.
-		//answers.Ad
+	public void AddReply(int qID, int choice) {
+		
+		answers.Add (qID, choice);
 		Debug.Log ("Added a new reply!");
+		EvaluateAnswers ();
 	}
 
 	public string EvaluateAnswers() {
@@ -26,5 +27,7 @@ public class ResultController : MonoBehaviour {
 		//go through answers, raise numbers, compare, return mostgivenanswer
 		string answer = "";
 		return answer;
+
+		Debug.Log ("Now in dict: " + answers.Count);
 	}
 }
