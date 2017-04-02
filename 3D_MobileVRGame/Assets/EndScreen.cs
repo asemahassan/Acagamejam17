@@ -16,7 +16,7 @@ public class EndScreen : MonoBehaviour {
 	//	switch (GameObject.Find("Quiz").GetComponent<ResultController>().EvaluateAnswers()) {
 		switch (strg) {
 		case "rich": 
-			img.overrideSprite = Resources.Load<Sprite> ("ending/rich");
+			img.overrideSprite = Resources.Load("ending/rich") as Sprite;
 			txt.text = "You got rich in your life time, which is something lots of people want. However, do remember that money cannot buy happiness. You do not want to end up alone like Mr Gatsby here, do you?";
 			break;
 			
