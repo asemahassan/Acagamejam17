@@ -48,7 +48,7 @@ public class Freeman : MonoBehaviour
 		currentField = null;
 
 		//Resume player state
-		GameController._playerState = PlayerState.None;
+		GameController._playerState = PlayerState.Freeman;
 		PickARandomWord ();
 		OrganiseWord ();
 		ShowPromptMessage ("");
@@ -139,7 +139,11 @@ public class Freeman : MonoBehaviour
 		}
 		Array.Sort (hideindex);
 		Debug.Log ("Modified:" + showWord);
+		ShowWordOnFields ();
+	}
 
+	void ShowWordOnFields ()
+	{
 		//show word in the input field characters
 		if (inputFieldsList.Count > 0) {
 			for (int i = 0; i < inputFieldsList.Count; i++) {
@@ -147,6 +151,17 @@ public class Freeman : MonoBehaviour
 				if (!showWord [i].ToString ().Equals ("_")) {
 					inputFieldsList [i].enabled = false;
 				}
+			}
+		}
+	}
+
+	void ResetFields ()
+	{
+		//show word in the input field characters
+		if (inputFieldsList.Count > 0) {
+			for (int i = 0; i < inputFieldsList.Count; i++) {
+				inputFieldsList [i].transform.FindChild ("Placeholder").GetComponent<Text> ().text = "_";
+				inputFieldsList [i].transform.FindChild ("Text").GetComponent<Text> ().text = "";
 			}
 		}
 	}
@@ -191,6 +206,17 @@ public class Freeman : MonoBehaviour
 
 	IEnumerator HideThisGame ()
 	{
+		ResetFields ();
+
+		mistakecounter = 0;
+		currentindex = 0;
+		hideindex = new int[]{ 0, 0, 0, 0, 0 };
+		originalWord = "";
+		showWord = "";
+
+		prevInputField = null;
+		currentField = null;
+
 		yield return new WaitForSeconds (1.0f);
 		//Hide this freeman game
 		freemanRef.SetActive (false);

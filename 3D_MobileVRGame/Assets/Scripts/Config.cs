@@ -61,8 +61,8 @@ public enum PlayerState
 	None = 0,
 	Idle,
 	Dialog,
-	InsideRoom,
-	CenterPoint,
+	Hunt,
+	Freeman,
 	AutoTranslation,
 	OutsideRoom
 }
@@ -73,6 +73,19 @@ public enum HMD
 	OpenVR,
 	Oculus
 }
+
+public enum QuestType
+{
+	None = -1,
+	Coins,
+	Fire,
+	Freeman,
+	Food,
+	Woods,
+	Beggar,
+	Treasure
+}
+
 
 public enum InputDevice
 {

@@ -21,9 +21,11 @@ public class PlayerController : MonoBehaviour
 	private float rotateSpeed = 5.0F;
 	private CharacterController controller = null;
 	private Transform mainCamera = null;
+	public int huntDown = 0;
 
-//	public DialogInterface diagUI;
-//	bool convoHasBegun;
+	[SerializeField]
+	private GameObject swordObject = null;
+	private Animation swordCtrl = null;
 
 	#endregion
 
@@ -57,6 +59,19 @@ public class PlayerController : MonoBehaviour
 					float curSpeed = speed * vertical;
 					controller.SimpleMove (forward * curSpeed);
 				}
+
+			} else if (GameController._playerState == PlayerState.Hunt) {
+				ShowSword ();
+				if (huntDown <= 3) {
+					//do sword action, using X key
+					if (Input.GetKeyUp (KeyCode.X)) {
+						if (!swordCtrl.isPlaying) {
+							swordCtrl.Play ();
+							huntDown++;
+							Debug.Log ("Hunt down: " + huntDown);
+						}
+					}
+				}
 			}
 		} else if (GameController._hmd == HMD.Oculus || GameController._hmd == HMD.OpenVR) {
 			//rotation is directly from HMD, can only move forward when in IDLE state
@@ -74,6 +89,30 @@ public class PlayerController : MonoBehaviour
 					float curSpeed = speed * vertical;
 					controller.SimpleMove (forward * curSpeed);
 				}
+			}
+		}
+	}
+
+	public void ShowSword ()
+	{
+		//activate sword
+		if (swordObject != null) {
+			if (!swordObject.activeSelf) {
+				swordObject.SetActive (true);
+				if (swordCtrl == null) {
+					swordCtrl = swordObject.GetComponent<Animation> ();
+				}						
+
+			}
+		}
+	}
+
+	public void HideSword ()
+	{
+		//activate sword
+		if (swordObject != null) {
+			if (swordObject.activeSelf) {
+				swordObject.SetActive (false);
 			}
 		}
 	}
