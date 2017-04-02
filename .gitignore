@@ -29,3 +29,4 @@ sysinfo.txt
 *.apk
 *.unitypackage
 3D_MobileVRGame/[Ll]ibrary/*
+3D_MobileVRGame/[Oo]bj/*

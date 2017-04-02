@@ -34,6 +34,8 @@ public class Hunting : MonoBehaviour
 				GameController.CreateMeatObject (this.transform.position);
 			}
 			GameController.UpdateQuestItemsCount (QuestType.Hunt);
+
+			GameController.UpdatePromptMessages ("Pick meat pieces; food stock");
 			GameController._playerState = PlayerState.Idle;
 			playerCtrl.huntDown = 0;
 			playerCtrl.HideSword ();
@@ -47,6 +49,8 @@ public class Hunting : MonoBehaviour
 	{
 		if (col.tag.Equals ("Player")) {
 			//take out sword
+			GameController.UpdatePromptMessages ("Use 'X' Key to Hunt down this animal");
+
 			PlayerController._huntingAnimalPos = this.transform.position;
 			GameController._playerState = PlayerState.Hunt;
 			Debug.Log ("Start hunting");

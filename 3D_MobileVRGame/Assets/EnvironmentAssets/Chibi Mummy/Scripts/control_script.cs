@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class control_script : MonoBehaviour {
+public class control_script : MonoBehaviour
+{
 
 	Animator anim;
 	bool boolper, boolper2, boolper3;
@@ -9,13 +10,13 @@ public class control_script : MonoBehaviour {
 
 	void Awake ()
 	{
-		anim = GetComponentInChildren<Animator>();
+		anim = GetComponentInChildren<Animator> ();
 	}
 
 	public void Walk ()
 	{
 
-		boolper = anim.GetBool("isWalk");
+		boolper = anim.GetBool ("isWalk");
 		anim.SetBool ("isWalk", !boolper);
 		anim.SetBool ("isRun", false);
 		anim.SetBool ("isAnother", false);
@@ -25,15 +26,12 @@ public class control_script : MonoBehaviour {
 		anim.SetBool ("isDeath2", false);
 		anim.SetBool ("HitStrike", false);
 
-
-
-
 	}
 
 	public void Run ()
 	{
 
-		boolper2 = anim.GetBool("isRun");
+		boolper2 = anim.GetBool ("isRun");
 		anim.SetBool ("isRun", !boolper2);
 		anim.SetBool ("isWalk", false);
 		anim.SetBool ("isAnother", false);
@@ -44,14 +42,12 @@ public class control_script : MonoBehaviour {
 		anim.SetBool ("HitStrike", false);
 
 
-
-
 	}
 
 	public void OtherIdle ()
 	{
 		
-		boolper3 = anim.GetBool("isAnother");
+		boolper3 = anim.GetBool ("isAnother");
 		anim.SetBool ("isAnother", !boolper3);
 		anim.SetBool ("isWalk", false);
 		anim.SetBool ("isRun", false);
@@ -60,12 +56,10 @@ public class control_script : MonoBehaviour {
 		anim.SetBool ("isDeath", false);
 		anim.SetBool ("isDeath2", false);
 		anim.SetBool ("HitStrike", false);
-
-
-
-
 	}
-	public void Attack()
+
+
+	public void Attack ()
 	{
 		anim.SetBool ("Attack", true);
 	}
@@ -79,10 +73,12 @@ public class control_script : MonoBehaviour {
 	{
 		anim.SetBool ("isDeath", true);
 	}
+
 	public void Death2 ()
 	{
 		anim.SetBool ("isDeath2", true);
 	}
+
 	public void Strike ()
 	{
 		anim.SetBool ("HitStrike", true);
@@ -93,7 +89,8 @@ public class control_script : MonoBehaviour {
 		anim.SetBool ("isDamage", true);
 	}
 
-	void Update () {
+	void Update ()
+	{
 	
 	}
 }

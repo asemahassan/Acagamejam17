@@ -84,9 +84,9 @@ public enum QuestType
 	Food,
 	Woods,
 	Beggar,
-	Treasure
+	Treasure,
+	Dog
 }
-
 
 public enum InputDevice
 {
