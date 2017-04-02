@@ -27,9 +27,14 @@ public class PlayerController : MonoBehaviour
 	private GameObject swordObject = null;
 	private Animation swordCtrl = null;
 
+	public static Vector3 _huntingAnimalPos = Vector3.zero;
+
 	#endregion
 
 	#region UNITY_METHODS
+
+	[SerializeField]
+	AudioSource _audio = null;
 
 	//Use this for initialisation
 	private void Start ()
@@ -40,6 +45,9 @@ public class PlayerController : MonoBehaviour
 
 		if (controller == null) {
 			controller = GetComponent<CharacterController> ();
+		}
+		if (_audio == null) {
+			_audio = this.GetComponent<AudioSource> ();
 		}
 	}
 
@@ -62,11 +70,17 @@ public class PlayerController : MonoBehaviour
 
 			} else if (GameController._playerState == PlayerState.Hunt) {
 				ShowSword ();
-				if (huntDown <= 3) {
+				if (huntDown <= 4) {
 					//do sword action, using X key
 					if (Input.GetKeyUp (KeyCode.X)) {
 						if (!swordCtrl.isPlaying) {
 							swordCtrl.Play ();
+
+							// play cutting sfx 
+							if (!_audio.isPlaying) {
+								_audio.PlayOneShot (_audio.clip, 1.0f);
+							}
+							GameController.CreateMeatObject (_huntingAnimalPos);
 							huntDown++;
 							Debug.Log ("Hunt down: " + huntDown);
 						}
