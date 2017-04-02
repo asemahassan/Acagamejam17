@@ -6,6 +6,7 @@ public class ResultController : MonoBehaviour {
 
 	[HideInInspector]
 	Dictionary<int, int > answers; // id, answer
+
 	// Use this for initialization
 	void Start () {
 		answers = new Dictionary<int, int> ();

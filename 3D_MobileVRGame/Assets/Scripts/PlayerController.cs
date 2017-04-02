@@ -73,6 +73,7 @@ public class PlayerController : MonoBehaviour
 					}
 				}
 			}
+
 		} else if (GameController._hmd == HMD.Oculus || GameController._hmd == HMD.OpenVR) {
 			//rotation is directly from HMD, can only move forward when in IDLE state
 			if (GameController._playerState == PlayerState.Idle) {

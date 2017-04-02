@@ -133,10 +133,10 @@ public class DialogInterface : MonoBehaviour
 	public void CallNext ()
 	{
 		//Let's not go forward if text is currently being animated, but let's speed it up.
-		if (animatingText) { 
-			animatingText = false; 
-			return;
-		
+//		if (animatingText) { 
+//			animatingText = false; 
+//			return;
+//		}
 
 			if (!dialoguePaused) { //Only if
 				//We check for current extraData before moving forward to do special actions
@@ -154,7 +154,7 @@ public class DialogInterface : MonoBehaviour
 				dialoguePaused = false;
 				itemPopUp.SetActive (false);
 			}
-		}
+
 	}
 
 	//Another way to handle Action Nodes is to listen to the OnActionNode event, which sends the ID of the action node

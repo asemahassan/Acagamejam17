@@ -6,10 +6,11 @@ using System.Linq;
 
 public class SpawnPointController : MonoBehaviour
 {
-
+	public List<int> convIDs;
 	// Use this for initialization
 	void Start ()
 	{
+		convIDs = new List<int>(new int [14]{ 0, 2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 });
 		SpawnItemsForGamePhase (GamePhase.Forest);
 		SpawnItemsForGamePhase (GamePhase.City);
 		SpawnItemsForGamePhase (GamePhase.Island);
@@ -55,8 +56,6 @@ public class SpawnPointController : MonoBehaviour
 	void SpawnItems (int amountOfPoints, GameObject parent)
 	{
 
-		int[] conv_IDs = new int[14]{ 0, 2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
-
 		List<Transform> transforms = parent.GetComponentsInChildren<Transform> ().ToList ();
 		//remove the parent transform, which is on index 0
 		transforms.RemoveAt (0);
@@ -66,10 +65,6 @@ public class SpawnPointController : MonoBehaviour
 			int which = UnityEngine.Random.Range (0, transforms.Count);
 			Quizmarker.transform.position = transforms [which].position;
 			Quizmarker.GetComponent<FacePlayer> ().diagUI = GameObject.Find ("UIHandler").GetComponent<DialogInterface> ();
-
-			Quizmarker.GetComponent<VIDE_Assign> ().AssignNew ("Laura");
-			Quizmarker.GetComponent<VIDE_Assign> ().assignedIndex = conv_IDs [UnityEngine.Random.Range (0, 14)]; 
-			transforms.RemoveAt (which); //so it can't spawn two there
 
 		}
 
