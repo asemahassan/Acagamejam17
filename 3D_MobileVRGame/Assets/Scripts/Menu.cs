@@ -82,12 +82,13 @@ public class Menu : MonoBehaviour
 
 	public void StartPlayerName ()
 	{
-		StartCoroutine (LoadSceneWithDelay (1, 2.0f));
+		
+		StartCoroutine (LoadSceneWithDelay (2, 2.0f));
 	}
 
 	public void StartGame ()
 	{
-		StartCoroutine (LoadSceneWithDelay (2, 1.0f));
+		StartCoroutine (LoadSceneWithDelay (3, 1.0f));
 	}
 
 	IEnumerator LoadSceneWithDelay (int sceneName, float delay)

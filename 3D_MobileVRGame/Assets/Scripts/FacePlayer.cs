@@ -36,7 +36,7 @@ public class FacePlayer : MonoBehaviour
 		assigned.overrideStartNode = GameObject.Find ("Quiz").GetComponent<SpawnPointController> ().convIDs [rndId];
 		Debug.Log (assigned.overrideStartNode);
 		//remove the used ID 
-		GameObject.Find("Quiz").GetComponent<SpawnPointController>().convIDs.RemoveAt(rndId);
+		GameObject.Find ("Quiz").GetComponent<SpawnPointController> ().convIDs.RemoveAt (rndId);
 
 		if (!VIDE_Data.inScene) {
 			Debug.LogError ("No VIDE_Data component in scene!");
@@ -49,7 +49,7 @@ public class FacePlayer : MonoBehaviour
 			diagUI.Begin (assigned);
 			GameController._playerState = PlayerState.Dialog;
 			//set interface parts
-			}
+		}
 
 		while (!Input.GetKey (KeyCode.Space)) {
 			yield return null;
@@ -68,17 +68,18 @@ public class FacePlayer : MonoBehaviour
 
 			GameObject[] clones = GameObject.FindGameObjectsWithTag ("playerTexts");
 			foreach (GameObject go in clones) {
-				go.GetComponent<Text>().text = "";
+				go.GetComponent<Text> ().text = "";
 			}
 
 			diagUI.CallNext ();
 		}
 
 		diagUI.playerText.text = "";
+		GameController.UpdatePromptMessages ("");
 		//Remove the question mark
 		Destroy (gameObject);
 	}
-	
+
 
 	void OnTriggerEnter (Collider col)
 	{
@@ -88,7 +89,9 @@ public class FacePlayer : MonoBehaviour
 		if (col.tag.Equals ("Player")) {
 			Debug.Log ("Player collided with question mark...!");
 
-			StartCoroutine(TryInteract (col));
+			GameController.UpdatePromptMessages ("USE 'Space' to continue and W & A to select options \n" +
+			"and Enter to confirm");
+			StartCoroutine (TryInteract (col));
 			isActiveQuestion = true;
 			didCollide = true;
 		}

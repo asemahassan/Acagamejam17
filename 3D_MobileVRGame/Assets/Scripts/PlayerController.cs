@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
 	private Transform mainCamera = null;
 	public int huntDown = 0;
 
+	public int moneyGiven = 0;
+
 	[SerializeField]
 	private GameObject swordObject = null;
 	private Animation swordCtrl = null;

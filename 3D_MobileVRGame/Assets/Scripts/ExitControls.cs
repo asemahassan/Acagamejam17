@@ -5,9 +5,13 @@ using UnityEngine;
 public class ExitControls : MonoBehaviour
 {
 
+	ResultController resultCtrl = null;
 	// Use this for initialization
 	void Start ()
 	{
+		if (resultCtrl == null) {
+			resultCtrl = GameObject.FindGameObjectWithTag ("Result").GetComponent<ResultController> ();
+		}
 		
 	}
 	
@@ -25,13 +29,14 @@ public class ExitControls : MonoBehaviour
 				GameController.UpdatePromptMessages ("Phase 2 is locked\n" +
 				"Complete Quests and answer Questions to unlock");
 
-			} else if (this.gameObject.transform.parent.name.Equals ("Phase_2_Exit")) {
+			} else if (this.gameObject.transform.name.Equals ("Phase_2_Exit")) {
 				GameController.UpdatePromptMessages ("Phase 3 is locked\n" +
 				"Complete Quests and answer Questions to unlock");
 
-			} else if (this.gameObject.transform.parent.name.Equals ("Phase_3_Exit")) {
+			} else if (this.gameObject.transform.name.Equals ("Phase_3_Exit")) {
 				GameController.UpdatePromptMessages ("Congratulations ! You have reached end of game");
 
+				resultCtrl.GameEnding ();
 			}
 
 		}
@@ -44,10 +49,10 @@ public class ExitControls : MonoBehaviour
 			if (this.gameObject.transform.parent.name.Equals ("Phase_1_Exit")) {
 				GameController.UpdatePromptMessages ("Find items to interact with");
 
-			} else if (this.gameObject.transform.parent.name.Equals ("Phase_2_Exit")) {
+			} else if (this.gameObject.transform.name.Equals ("Phase_2_Exit")) {
 				GameController.UpdatePromptMessages ("Find items to interact with");
 
-			} else if (this.gameObject.transform.parent.name.Equals ("Phase_3_Exit")) {
+			} else if (this.gameObject.transform.name.Equals ("Phase_3_Exit")) {
 				GameController.UpdatePromptMessages ("Congratulations ! You have reached end of game");
 
 				//Call Sebastian Result evaluation methods here
