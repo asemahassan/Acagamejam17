@@ -30,7 +30,7 @@ public class WoodenLogs : MonoBehaviour
 			}
 
 			GameController.UpdateQuestItemsCount (QuestType.Woods);
-			Destroy (this.gameObject, 1.0f);
+			Destroy (this.gameObject, 0.5f);
 		}
 
 	}

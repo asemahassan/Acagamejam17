@@ -21,6 +21,19 @@ public class GameController : MonoBehaviour
 
 	private static Dictionary<string, int> QuestCounterData = new Dictionary<string,int> ();
 
+	static List<Vector3> _meatSpawnPos = new List<Vector3> ();
+
+	private static Text promptMessages = null;
+
+	[SerializeField]
+	private GameObject _phase1Exit = null;
+
+	[SerializeField]
+	private GameObject _phase2Exit = null;
+
+	[SerializeField]
+	private GameObject _phase2Entry = null;
+
 	#endregion
 
 	#region UNITY_METHODS
@@ -30,6 +43,10 @@ public class GameController : MonoBehaviour
 	{
 		if (hudObjUI == null) {
 			hudObjUI = GameObject.FindGameObjectWithTag ("HUD");
+		}
+
+		if (promptMessages == null) {
+			promptMessages = GameObject.FindGameObjectWithTag ("PromptMsg").GetComponent<Text> ();
 		}
 
 	}
@@ -42,7 +59,70 @@ public class GameController : MonoBehaviour
 
 	#endregion
 
-	//For every type of quest it will update the counter in HUD when called
+	//Main game loop
+	void Update ()
+	{
+
+		switch (_gamePhase) {
+
+		case GamePhase.Forest:
+			{
+				if (QuestCounterData.Count > 0) {
+
+					//check quest counter for 3 tasks which player has completed atleast to move further in level
+					if ((QuestCounterData.ContainsKey (QuestType.Hunt.ToString ()) && QuestCounterData [QuestType.Hunt.ToString ()] >= 1)
+					    && (QuestCounterData.ContainsKey (QuestType.Freeman.ToString ()) && QuestCounterData [QuestType.Freeman.ToString ()] >= 1)
+					    && (QuestCounterData.ContainsKey (QuestType.Fire.ToString ()) && QuestCounterData [QuestType.Fire.ToString ()] >= 1)) {
+
+						//Open phase 2 gate
+						_phase1Exit.SetActive (false);
+						GameController.UpdatePromptMessages ("Phase 2 Unlocked, explore the city");
+						_gamePhase = GamePhase.City;
+						_phase2Entry.SetActive (false);
+
+					}
+						
+				}
+				break;
+			}
+
+		case GamePhase.City:
+			{
+				if (QuestCounterData.Count > 0) {
+
+					//check quest counter for 3 tasks which player has completed atleast to move further in level
+					if ((QuestCounterData.ContainsKey (QuestType.Beggar.ToString ()) && QuestCounterData [QuestType.Beggar.ToString ()] >= 1)
+					    && (QuestCounterData.ContainsKey (QuestType.Dog.ToString ()) && QuestCounterData [QuestType.Dog.ToString ()] >= 1)
+					    && (QuestCounterData.ContainsKey (QuestType.Treasure.ToString ()) && QuestCounterData [QuestType.Treasure.ToString ()] >= 1)) {
+
+						//Open phase 2 gate
+						_phase2Exit.SetActive (false);
+						GameController.UpdatePromptMessages ("Phase 3 Unlocked, explore the island");
+						_gamePhase = GamePhase.Island;
+
+					}
+				}
+				break;
+			}
+
+		case GamePhase.Island:
+			{
+
+				break;
+			}
+
+		}
+		
+	}
+
+	public static void UpdatePromptMessages (string msg)
+	{
+		if (promptMessages != null) {
+			promptMessages.text = msg.ToUpper ();
+		}
+	}
+
+	//For every type of quest it will update the counter in HUD when called, incrementing
 	public static void UpdateQuestItemsCount (QuestType type)
 	{
 		Text counterUI = null;
@@ -74,11 +154,36 @@ public class GameController : MonoBehaviour
 		return 0;
 	}
 
+	public static void ResetQuestCounterValueForKey (QuestType type, int value)
+	{
+		Text counterUI = null;
+		if (hudObjUI != null) {
+			if (counterUI == null) {
+				counterUI = hudObjUI.transform.FindChild (type.ToString ()).transform.FindChild ("Counter").GetComponent<Text> ();
+
+			}
+			counterUI.text = value.ToString ();
+			if (QuestCounterData.ContainsKey (type.ToString ())) {
+				QuestCounterData [type.ToString ()] = value;
+				Debug.Log ("Reseting:" + type.ToString () + " :" + value);
+			}
+		}
+	}
+
+
 	public static void  CreateMeatObject (Vector3 pos)
 	{
 		pos = new Vector3 (pos.x + UnityEngine.Random.Range (-2, 2),
 			pos.y, pos.z + UnityEngine.Random.Range (-2, 2));
 
+		if (_meatSpawnPos.Count > 0) {
+			while (!_meatSpawnPos.Contains (pos)) {
+				pos = new Vector3 (pos.x + UnityEngine.Random.Range (-2, 2),
+					pos.y, pos.z + UnityEngine.Random.Range (-2, 2));
+			} 
+			_meatSpawnPos.Add (pos);
+		}
+	
 		GameObject obj = Instantiate (Resources.Load ("Prefabs/Meat")) as GameObject;
 		obj.transform.position = pos;
 	}

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Campfire : MonoBehaviour
 {
-
 	PlayerController playerCtrl = null;
 	bool isFire = false;
 	[SerializeField]
@@ -25,14 +24,28 @@ public class Campfire : MonoBehaviour
 
 	void Update ()
 	{
-		int woodCounter = GameController.GetQuestCounterValueForKey (QuestType.Woods.ToString ());
-		if (woodCounter == 6 && !isFire) {
-			MakeCampFire ();
-			isFire = true;
+		if (GameController._gamePhase == GamePhase.Forest && this.gameObject.name.Equals ("Campfire_phase1")) {
+			int woodCounter = GameController.GetQuestCounterValueForKey (QuestType.Woods.ToString ());
+			if (woodCounter == 6 && !isFire) {
+
+				GameController.UpdatePromptMessages ("You just made a campfire in Forest, look around for it");
+
+				MakeCampFire ();
+				isFire = true;
+			}
+		} else if (GameController._gamePhase == GamePhase.Island && this.gameObject.name.Equals ("Campfire_phase2")) {
+			int woodCounter = GameController.GetQuestCounterValueForKey (QuestType.Woods.ToString ());
+			if (woodCounter == 6 && !isFire) {
+
+				GameController.UpdatePromptMessages ("You just made a campfire in Forest, look around for it");
+
+				MakeCampFire ();
+				isFire = true;
+			}
 		}
 	}
 
-	public void MakeCampFire ()
+	private void MakeCampFire ()
 	{
 		// play campfire in loop 
 		if (!_audio.isPlaying) {
@@ -45,5 +58,11 @@ public class Campfire : MonoBehaviour
 			}
 		}
 		GameController.UpdateQuestItemsCount (QuestType.Fire);
+		Invoke ("ResetWoodsCounter", 1.0f);
+	}
+
+	private void ResetWoodsCounter ()
+	{
+		GameController.ResetQuestCounterValueForKey (QuestType.Woods, 0);
 	}
 }

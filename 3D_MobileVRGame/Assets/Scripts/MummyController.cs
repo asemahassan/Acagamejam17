@@ -10,21 +10,32 @@ public class MummyController : MonoBehaviour
 	[SerializeField]
 	GameObject mummyFences = null;
 
-	[SerializeField]
-	GameObject mummyObject = null;
+	private static GameObject mummyObject = null;
+
+	private static Vector3 targetPosition = new Vector3 (625, 0, 465);
 
 	private static control_script mummyCtrl = null;
 	private static Animation animFence = null;
+
+	public static bool isFreeman = false;
+
+	private static BoxCollider myCollider = null;
 	// Use this for initialization
 	void Start ()
 	{
 		if (mummyFences != null)
 			animFence = mummyFences.GetComponent<Animation> ();
 
+		if (mummyObject == null) {
+			mummyObject = GameObject.FindGameObjectWithTag ("Mummy");
+		}
+
 		if (mummyCtrl == null) {
 			mummyCtrl = mummyObject.GetComponent<control_script> ();
 		}
-
+		if (myCollider == null) {
+			myCollider = this.GetComponent<BoxCollider> ();
+		}
 	}
 	
 	// Update is called once per frame
@@ -39,8 +50,10 @@ public class MummyController : MonoBehaviour
 		if (other.tag.Equals ("Player")) {
 			//Start the mummy convo system
 
-			//If player selects Yes! to Help then open the puzzle to guess word
-			ShowFreeManGame ();
+			if (!isFreeman) {
+				//If player selects Yes! to Help then open the puzzle to guess word
+				ShowFreeManGame ();
+			}
 		}
 		
 	}
@@ -53,23 +66,41 @@ public class MummyController : MonoBehaviour
 			freemanGameRef.SetActive (false);
 		}
 			
-			
 	}
 
 	public static void OpenFences ()
 	{
-		if (animFence != null)
+		if (animFence != null) {
 			animFence.Play ();
+		}
+		isFreeman = true;
+
+		GameController.UpdateQuestItemsCount (QuestType.Freeman);
+		if (myCollider != null) {
+			myCollider.enabled = false;
+		}
+
 	}
 
 	public static IEnumerator playMummyAnimation (string animType, float delay)
 	{
 
 		yield return new WaitForSeconds (delay);
+
 		switch (animType) {
-		case "Run":
+		case "Idle":
 			{
+				mummyCtrl.OtherIdle ();
+				break;
+			}
+		case "Strike":
+			{
+				mummyCtrl.Strike ();
+				yield return new WaitForSeconds (1.0f);
 				mummyCtrl.Run ();
+				targetPosition = new Vector3 (targetPosition.x, mummyObject.transform.position.y, targetPosition.z);
+				iTween.MoveTo (mummyObject, iTween.Hash ("position", targetPosition, "time", 30.0f, "easetype", iTween.EaseType.linear, 
+					"oncompleted", "GoToIdle", "oncompletetarget", mummyObject));
 				break;
 			}
 		case "Attack":
@@ -89,7 +120,11 @@ public class MummyController : MonoBehaviour
 			}
 			
 		}
+	}
 
+	private void GoToIdle ()
+	{
+		StartCoroutine (MummyController.playMummyAnimation ("Idle", 0.5f));
 	}
 }
 

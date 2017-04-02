@@ -44,3 +44,5 @@
 /Users/asemahassan/Desktop/UNITY3D_WORK/GitHub Projects/Acagamejam17/3D_MobileVRGame/Temp/bin/Debug/Unity.CecilTools.dll
 /Users/asemahassan/Desktop/UNITY3D_WORK/GitHub Projects/Acagamejam17/3D_MobileVRGame/Temp/bin/Debug/Mono.Cecil.Pdb.dll
 /Users/asemahassan/Desktop/UNITY3D_WORK/GitHub Projects/Acagamejam17/3D_MobileVRGame/Temp/bin/Debug/Mono.Cecil.Mdb.dll
+/Users/asemahassan/Desktop/UNITY3D_WORK/GitHub Projects/Acagamejam17/3D_MobileVRGame/Temp/bin/Debug/Assembly-CSharp-firstpass.dll
+/Users/asemahassan/Desktop/UNITY3D_WORK/GitHub Projects/Acagamejam17/3D_MobileVRGame/Temp/bin/Debug/Assembly-CSharp-firstpass.dll.mdb

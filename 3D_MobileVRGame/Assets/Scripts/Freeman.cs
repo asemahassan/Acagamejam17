@@ -47,6 +47,7 @@ public class Freeman : MonoBehaviour
 		prevInputField = null;
 		currentField = null;
 
+		ResetFields ();
 		//Resume player state
 		GameController._playerState = PlayerState.Freeman;
 		PickARandomWord ();
@@ -157,6 +158,10 @@ public class Freeman : MonoBehaviour
 
 	void ResetFields ()
 	{
+		for (int i = 0; i < 6; i++) {
+			hangManBody [i].GetComponent<Image> ().enabled = false;
+		}
+
 		//show word in the input field characters
 		if (inputFieldsList.Count > 0) {
 			for (int i = 0; i < inputFieldsList.Count; i++) {
@@ -186,7 +191,8 @@ public class Freeman : MonoBehaviour
 					ShowPromptMessage ("Thanks for saving my life...!");
 					MummyController.OpenFences ();
 					//mummy run animation
-					StartCoroutine (MummyController.playMummyAnimation ("Run", 1.0f));
+					StartCoroutine (MummyController.playMummyAnimation ("Strike", 1.0f));
+					GameController.UpdatePromptMessages ("Freeman quest completed");
 					StartCoroutine (HideThisGame ());
 					return;
 				}
@@ -194,10 +200,11 @@ public class Freeman : MonoBehaviour
 				hangManBody [mistakecounter].GetComponent<Image> ().enabled = true;
 				mistakecounter++;
 				prevInputField = currentField;
-				StartCoroutine (MummyController.playMummyAnimation ("Damage", 0.01f));
+				StartCoroutine (MummyController.playMummyAnimation ("Damage", 0.05f));
 			}
 		} else {
 			ShowPromptMessage ("You couldn't save me...!");
+			GameController.UpdatePromptMessages ("Freeman quest not completed");
 			//mummy death animation 
 			StartCoroutine (MummyController.playMummyAnimation ("Death", 1.0f));
 			StartCoroutine (HideThisGame ());
@@ -217,7 +224,7 @@ public class Freeman : MonoBehaviour
 		prevInputField = null;
 		currentField = null;
 
-		yield return new WaitForSeconds (1.0f);
+		yield return new WaitForSeconds (5.0f);
 		//Hide this freeman game
 		freemanRef.SetActive (false);
 	}
